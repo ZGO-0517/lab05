@@ -1,40 +1,46 @@
-//implement input library
+// implement input library
 use std::io;
 
-//main script
+
+// main script
 fn main() {
+	// gathers input from user
 	println!("Please enter a number:");	
 	let mut n = String::new();
 	
+	// fetches the text and handles potential errors
 	io::stdin()
 		.read_line(&mut n).expect("Failed to read line");
-
+	//typecasts the input as an integer
 	let n: i32 = n
 		.trim().parse().expect("Please type a valid number");
-
+	//calls the functions below
 	is_even(n);
 	digit_sum(n);
+	is_prime(n);
 }
 
-//checking if even
+
+// checking if even
 fn is_even(n: i32) {
-	//create a boolean that comes back true if the remainder is 0
+	// create a boolean that comes back true if the remainder is 0
 	let even = n % 2 == 0;
 
-	//print the result of either an even or odd number
+	// print the result of either an even or odd number
 	if even {
-		println!("The number is even!");
+		println!("{} is even!", n);
 	}
 	else {
-		println!("The number is odd!");
+		println!("{} is odd!", n);
 	}
 }
 
-//calculating digit sum
+
+// calculating digit sum
 fn digit_sum(n: i32) {
 	// create a new variable that will be the typecast of n
 	let mut num = n.abs() as u32;
-	//create a sum variable
+	// create a sum variable
 	let mut sum = 0;
 	
 	// start a loop that will add the individual digits one by one until
@@ -43,6 +49,43 @@ fn digit_sum(n: i32) {
 		sum += num % 10;
 		num /= 10;
 	}
-	//print the digit sum
-	println!("The digit sum is {}", sum);
+	// print the digit sum
+	println!("The digit sum is {}!", sum);
+}
+
+
+// checks if input is a prime number
+fn is_prime(n: i32) {
+	// checks if the number is 1 or below (all not prime numbers)	
+	if n <= 1 {
+		println!("{} is not a prime number!", n);
+		return;
+	}
+	// checks if the number is 2 (the only even prime number)
+	if n == 2 {
+		println!("{} is a prime number!", n);
+		return;
+	}
+	// checks if the number is even (all not prime except for 2)
+	if n % 2 == 0 {
+		println!("{} is not a prime number!", n);
+		return;
+	}
+	// checks for odd divisors to the square root of n
+	let limit = (n as f64).sqrt() as i32;
+	let mut prime = true;
+	// checks to see if smaller integers can divide it evenly
+	for i in (3..=limit).step_by(2) {
+		if n % i == 0 {
+			prime = false;
+			break;
+		}
+	}
+	// prints the results
+	if prime {
+		println!("{} is a prime number!", n);
+	}
+	else {
+		println!("{} is not a prime number!", n);
+	}
 }
