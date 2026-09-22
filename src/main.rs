@@ -11,13 +11,15 @@ fn main() {
 	// fetches the text and handles potential errors
 	io::stdin()
 		.read_line(&mut n).expect("Failed to read line");
-	//typecasts the input as an integer
+	// typecasts the input as an integer
 	let n: i32 = n
 		.trim().parse().expect("Please type a valid number");
-	//calls the functions below
+	// calls the functions below
+	println!("");
 	is_even(n);
 	digit_sum(n);
 	is_prime(n);
+	count_divisors(n);
 }
 
 
@@ -88,4 +90,24 @@ fn is_prime(n: i32) {
 	else {
 		println!("{} is not a prime number!", n);
 	}
+}
+
+
+// checks how many integers from 1 to n divide n evenly
+fn count_divisors(n: i32) {
+	// if a number is 0 or less it will have no divisors
+	if n <= 0 {
+		println!("{} has no divisors!", n);
+		return;
+	}
+	// creates a variable for counting the divisors
+	let mut divisors = 0;
+	for i in 1..=n {
+		// checks if the number divides n evenly
+		if n % i == 0 {
+			divisors += 1;
+		}
+	}
+	// prints the result
+	println!("{} has {} divisor(s).", n, divisors);
 }
